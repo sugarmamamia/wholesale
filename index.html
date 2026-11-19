@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wholesale Catalog | Sugarmama Sugarcane</title>
+<meta name="description" content="Wholesale frozen sugarcane stalks, sugarcane juice and tropical fruit for Bay Area shops. Build an order and pick up in Hayward or San Francisco.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800&family=PT+Sans:wght@400;700&display=swap">
+<style>
+:root {
+--cream: #FEF9E1;
+--green: #1E6B2A;
+--deep: #17421B;
+--line: #E4DDB8;
+--gold: #F2C230;
+--white: #FFFFFF;
+}
+* { box-sizing: border-box; }
+body {
+margin: 0;
+font-family: 'PT Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+color: var(--deep);
+background: var(--cream);
+font-size: 16px;
+line-height: 1.5;
+}
+h1, h2, h3 { font-family: Fraunces, Georgia, serif; margin: 0; }
+.wrap { max-width: 1200px; margin: 0 auto; padding: 32px 24px 56px; }
+.intro { display: flex; flex-direction: column; gap: 6px; margin-bottom: 24px; }
+.intro h1 { font-weight: 800; font-size: clamp(30px, 4vw, 40px); line-height: 1.1; color: var(--green); }
+.intro p { margin: 0; font-size: 17px; max-width: 640px; }
+.layout { display: flex; flex-wrap: wrap; gap: 32px; align-items: flex-start; }
+.catalog { flex: 999 1 560px; min-width: 0; display: flex; flex-direction: column; gap: 36px; }
+.chips { display: flex; flex-wrap: wrap; gap: 10px; }
+.chip {
+min-height: 44px; padding: 0 20px; border-radius: 999px;
+border: 2px solid var(--deep); background: transparent; color: var(--deep);
+font: inherit; font-weight: 700; cursor: pointer;
+}
+.chip[aria-pressed="true"] { background: var(--deep); color: var(--cream); }
+.group { display: flex; flex-direction: column; gap: 18px; }
+.group h2 { font-weight: 800; font-size: 30px; color: var(--green); }
+.group > p { margin: 4px 0 0; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(240px, 100%), 1fr)); gap: 20px; }
+.card {
+background: var(--white); border: 1px solid var(--line); border-radius: 20px;
+overflow: hidden; display: flex; flex-direction: column;
+}
+.photo {
+height: 170px; padding: 12px; display: flex; align-items: flex-start;
+background-size: cover; background-position: center;
+}
+.photo.cane { background-color: #E3EFCF; }
+.photo.juice { background-color: #FBEBC0; }
+.photo.fruit { background-color: #F6DDE3; }
+.badge {
+background: var(--gold); color: var(--deep); font-size: 13px; font-weight: 700;
+padding: 5px 10px; border-radius: 999px;
+}
+.body { padding: 18px 20px 20px; display: flex; flex-direction: column; gap: 6px; flex-grow: 1; }
+.body h3 { font-weight: 600; font-size: 20px; line-height: 1.2; }
+.size { font-size: 15px; }
+.price { font-size: 17px; font-weight: 700; color: var(--green); }
+.qty { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: auto; padding-top: 12px; }
+.stepper { display: flex; align-items: center; gap: 6px; }
+.step {
+width: 44px; height: 44px; border-radius: 999px; border: 2px solid var(--deep);
+font: inherit; font-size: 22px; font-weight: 700; line-height: 1; cursor: pointer;
+background: transparent; color: var(--deep);
+}
+.step.plus { background: var(--deep); color: var(--cream); }
+.count { min-width: 36px; text-align: center; font-size: 19px; font-weight: 700; }
+.order {
+flex: 1 1 320px; background: var(--white); border: 2px solid var(--deep);
+border-radius: 20px; padding: 24px; display: flex; flex-direction: column; gap: 14px;
+}
+.order h2 { font-weight: 800; font-size: 26px; }
+.line { display: flex; justify-content: space-between; gap: 12px; padding-bottom: 10px; border-bottom: 1px solid var(--line); }
+.line span:last-child { font-weight: 700; white-space: nowrap; }
+.total { display: flex; justify-content: space-between; font-size: 17px; font-weight: 700; }
+.small { margin: 0; font-size: 14px; }
+.small a { color: var(--deep); font-weight: 700; }
+fieldset { border: 0; padding: 0; margin: 0; }
+legend { font-size: 15px; font-weight: 700; padding: 0; margin-bottom: 4px; }
+.radio { display: flex; align-items: center; gap: 10px; min-height: 44px; cursor: pointer; }
+.radio input { width: 20px; height: 20px; accent-color: var(--deep); }
+.field { display: flex; flex-direction: column; gap: 6px; font-size: 15px; font-weight: 700; }
+.field input {
+height: 46px; border: 1px solid var(--deep); border-radius: 10px; padding: 0 12px;
+font: inherit; font-weight: 400; color: var(--deep); background: var(--white);
+}
+.note { margin: 0; font-size: 15px; background: #FBEFC2; padding: 12px 14px; border-radius: 12px; }
+.note.error { background: #FBE1DC; }
+.send {
+display: flex; align-items: center; justify-content: center; text-align: center;
+min-height: 54px; border-radius: 999px; border: 2px solid var(--green);
+font: inherit; font-size: 18px; font-weight: 700; cursor: pointer; text-decoration: none;
+background: var(--green); color: var(--white);
+}
+.send.alt { background: transparent; color: var(--green); }
+.how { background: var(--white); border-top: 1px solid var(--line); }
+.how .wrap { padding-top: 48px; padding-bottom: 48px; }
+.how h2 { font-weight: 800; font-size: 30px; color: var(--green); margin-bottom: 20px; }
+.steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr)); gap: 24px; }
+.steps div { display: flex; flex-direction: column; gap: 6px; }
+.num { font-family: Fraunces, Georgia, serif; font-weight: 800; font-size: 36px; color: var(--green); line-height: 1; }
+.steps strong { font-size: 18px; }
+button:focus-visible, a:focus-visible, input:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
+[hidden] { display: none !important; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="intro">
+<h1>Build your wholesale order</h1>
+<p>All products are frozen and sold by the case. Add what you need, send the request, and we will confirm stock, total and pickup time.</p>
+</div>
+<div class="layout">
+<div class="catalog">
+<div class="chips" id="chips" role="group" aria-label="Filter products"></div>
+<div id="groups"></div>
+</div>
+<aside class="order" aria-labelledby="order-title">
+<h2 id="order-title">Your order</h2>
+<div id="lines" aria-live="polite"></div>
+<div class="total"><span>Total cases</span><span id="total">0</span></div>
+<p class="small">Prices marked "quoted" are confirmed in our reply, along with your total. Nothing is charged until we confirm.</p>
+<fieldset>
+<legend>How do you want it?</legend>
+<label class="radio"><input type="radio" name="pickup" value="Pick up at the Hayward shop (838 B Street)"> <span>Pick up at the Hayward shop</span></label>
+<label class="radio"><input type="radio" name="pickup" value="Pick up at San Francisco cold storage" data-min="10"> <span>Pick up at SF cold storage (10+ cases)</span></label>
+<label class="radio"><input type="radio" name="pickup" value="Delivery"> <span>Delivery ($500 minimum)</span></label>
+</fieldset>
+<p class="note" id="min-note" hidden>San Francisco cold storage pickup starts at 10 cases. Add more, or choose Hayward shop pickup.</p>
+<label class="field">Business name
+<input type="text" id="biz" autocomplete="organization">
+</label>
+<label class="field">Your name and phone
+<input type="text" id="contact" autocomplete="name">
+</label>
+<p class="note error" id="error" role="alert" hidden></p>
+<a class="send" id="send-text" href="#">Text this order</a>
+<a class="send alt" id="send-email" href="#">Email this order</a>
+<p class="small" style="text-align:center">Or call or text us at <a href="tel:+15105765509" target="_top">(510) 576-5509</a></p>
+</aside>
+</div>
+</div>
+<section class="how">
+<div class="wrap">
+<h2>How ordering works</h2>
+<div class="steps">
+<div><span class="num">1</span><strong>Request your order</strong><span>Pick your cases and send the request by text or email.</span></div>
+<div><span class="num">2</span><strong>We confirm and invoice</strong><span>We check stock, agree a pickup or delivery time, and send an invoice.</span></div>
+<div><span class="num">3</span><strong>Pay online, then pick up</strong><span>Pay the invoice from your phone and collect your order.</span></div>
+</div>
+</div>
+</section>
+<script>
+(function () {
+var ORDER_PHONE = '+15105765509';
+var ORDER_EMAIL = 'vinh@sugarmamasugarcane.com';
+var CATALOG = [
+{ id: 'cane', title: 'Sugarcane', note: 'Peeled, cut and frozen at the source.', items: [
+{ id: 'stalks', name: 'Frozen peeled sugarcane stalks', size: '33 lb case (15 kg)', price: 35, badge: 'For shops with a press', photo: '' },
+{ id: 'scjuice', name: 'Frozen sugarcane juice', size: '33 lb case (15 x 1 kg bags)', price: 0, badge: 'No press needed', photo: '' }
+] },
+{ id: 'juice', title: 'Fruit juices', note: 'Thaw and serve. No equipment needed.', items: [
+{ id: 'calamansi', name: 'Calamansi juice', size: '22 lb case (10 x 1 kg bags)', price: 0, badge: 'Drinks and sodas', photo: '' },
+{ id: 'coconut', name: 'Coconut water', size: '22 lb case (10 x 1 kg bags)', price: 0, badge: 'Drinks and smoothies', photo: '' },
+{ id: 'passion', name: 'Passionfruit juice with seeds', size: '22 lb case (10 x 1 kg bags)', price: 0, badge: 'Teas and boba', photo: '' },
+{ id: 'watermelon', name: 'Watermelon juice', size: '22 lb case (10 x 1 kg bags)', price: 0, badge: 'Juices and slushes', photo: '' }
+] },
+{ id: 'fruit', title: 'Diced fruit', note: 'Ready for desserts, bowls and toppings.', items: [
+{ id: 'cocochunks', name: 'Diced coconut chunks', size: '22 lb case (10 x 1 kg bags)', price: 0, badge: 'Chè and desserts', photo: '' },
+{ id: 'dragon', name: 'Diced purple dragonfruit', size: '22 lb case (10 x 1 kg bags)', price: 0, badge: 'Smoothies and bowls', photo: '' },
+{ id: 'mango', name: 'Diced mango chunks', size: 'Sold by the case', price: 0, badge: 'Smoothies and desserts', photo: '' }
+] }
+];
+var qty = {};
+var filter = 'all';
+function el(tag, attrs, children) {
+var node = document.createElement(tag);
+Object.keys(attrs || {}).forEach(function (k) {
+if (k === 'text') node.textContent = attrs[k];
+else if (k === 'class') node.className = attrs[k];
+else node.setAttribute(k, attrs[k]);
+});
+(children || []).forEach(function (c) { node.appendChild(c); });
+return node;
+}
+function allItems() {
+var out = [];
+CATALOG.forEach(function (g) { g.items.forEach(function (p) { out.push(p); }); });
+return out;
+}
+function totalCases() {
+return allItems().reduce(function (sum, p) { return sum + (qty[p.id] || 0); }, 0);
+}
+function renderChips() {
+var box = document.getElementById('chips');
+box.textContent = '';
+[{ id: 'all', title: 'All products' }].concat(CATALOG).forEach(function (g) {
+var b = el('button', { type: 'button', class: 'chip', 'aria-pressed': String(filter === g.id), text: g.title });
+b.addEventListener('click', function () { filter = g.id; renderChips(); renderGroups(); });
+box.appendChild(b);
+});
+}
+function renderGroups() {
+var box = document.getElementById('groups');
+box.textContent = '';
+box.style.display = 'flex';
+box.style.flexDirection = 'column';
+box.style.gap = '36px';
+CATALOG.forEach(function (g) {
+if (filter !== 'all' && filter !== g.id) return;
+var grid = el('div', { class: 'grid' });
+g.items.forEach(function (p) {
+var photo = el('div', { class: 'photo ' + g.id }, [el('span', { class: 'badge', text: p.badge })]);
+if (p.photo) photo.style.backgroundImage = 'url("' + p.photo + '")';
+var count = el('span', { class: 'count', text: String(qty[p.id] || 0), 'aria-live': 'polite' });
+var minus = el('button', { type: 'button', class: 'step', 'aria-label': 'Remove one case of ' + p.name, text: '−' });
+var plus = el('button', { type: 'button', class: 'step plus', 'aria-label': 'Add one case of ' + p.name, text: '+' });
+minus.addEventListener('click', function () { change(p.id, -1, count); });
+plus.addEventListener('click', function () { change(p.id, 1, count); });
+grid.appendChild(el('article', { class: 'card' }, [
+photo,
+el('div', { class: 'body' }, [
+el('h3', { text: p.name }),
+el('div', { class: 'size', text: p.size }),
+el('div', { class: 'price', text: p.price ? '$' + p.price + ' per case' : 'Price on request' }),
+el('div', { class: 'qty' }, [
+el('span', { text: 'Cases' }),
+el('div', { class: 'stepper' }, [minus, count, plus])
+])
+])
+]));
+});
+box.appendChild(el('section', { class: 'group' }, [
+el('div', {}, [el('h2', { text: g.title }), el('p', { text: g.note })]),
+grid
+]));
+});
+}
+function change(id, delta, countNode) {
+qty[id] = Math.max(0, (qty[id] || 0) + delta);
+countNode.textContent = String(qty[id]);
+renderOrder();
+}
+function selectedPickup() {
+return document.querySelector('input[name="pickup"]:checked');
+}
+function renderOrder() {
+var box = document.getElementById('lines');
+box.textContent = '';
+var total = totalCases();
+if (total === 0) {
+box.appendChild(el('p', { class: 'small', text: 'Add cases with the + buttons to start your order.' }));
+}
+allItems().forEach(function (p) {
+var q = qty[p.id] || 0;
+if (!q) return;
+box.appendChild(el('div', { class: 'line' }, [
+el('span', { text: q + ' x ' + p.name }),
+el('span', { text: p.price ? '$' + (p.price * q) : 'quoted' })
+]));
+});
+document.getElementById('total').textContent = String(total);
+var pick = selectedPickup();
+var min = pick ? Number(pick.getAttribute('data-min') || 0) : 0;
+document.getElementById('min-note').hidden = !(min && total < min);
+document.getElementById('error').hidden = true;
+}
+function buildMessage() {
+var biz = document.getElementById('biz').value.trim();
+var contact = document.getElementById('contact').value.trim();
+var pick = selectedPickup();
+var rows = [];
+allItems().forEach(function (p) {
+var q = qty[p.id] || 0;
+if (q) rows.push(q + ' x ' + p.name + ' (' + p.size + ')');
+});
+if (!rows.length) return { error: 'Add at least one case to your order first.' };
+if (!biz) return { error: 'Please enter your business name.' };
+if (!contact) return { error: 'Please enter your name and phone so we can confirm.' };
+if (!pick) return { error: 'Please choose pickup or delivery.' };
+var text = 'Wholesale order request\n'
++ 'Business: ' + biz + '\n'
++ 'Contact: ' + contact + '\n'
++ pick.value + '\n\n'
++ rows.join('\n') + '\n\n'
++ 'Total cases: ' + totalCases();
+return { text: text, biz: biz };
+}
+function send(kind) {
+var msg = buildMessage();
+var err = document.getElementById('error');
+if (msg.error) {
+err.textContent = msg.error;
+err.hidden = false;
+return;
+}
+err.hidden = true;
+var url = kind === 'text'
+? 'sms:' + ORDER_PHONE + '?&body=' + encodeURIComponent(msg.text)
+: 'mailto:' + ORDER_EMAIL + '?subject=' + encodeURIComponent('Wholesale order request: ' + msg.biz) + '&body=' + encodeURIComponent(msg.text);
+try { window.top.location.href = url; } catch (e) { window.location.href = url; }
+}
+document.getElementById('send-text').addEventListener('click', function (e) { e.preventDefault(); send('text'); });
+document.getElementById('send-email').addEventListener('click', function (e) { e.preventDefault(); send('email'); });
+Array.prototype.forEach.call(document.querySelectorAll('input[name="pickup"]'), function (r) {
+r.addEventListener('change', renderOrder);
+});
+renderChips();
+renderGroups();
+renderOrder();
+})();
+</script>
+</body>
+</html>
